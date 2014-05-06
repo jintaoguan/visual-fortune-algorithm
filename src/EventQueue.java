@@ -5,6 +5,7 @@
 
 import java.awt.Graphics;
 
+//A priority queue to keep track of the site events and circle events
 class EventQueue
 {
 	public void insert (EventPoint p)

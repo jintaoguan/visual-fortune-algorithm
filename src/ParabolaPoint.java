@@ -49,6 +49,7 @@ class ParabolaPoint extends MyPoint
 				d4 = (d3 - d1) / (d - d2);
 				d5 = d * d4 + d1;
 			}
+            //the circle events are detected as the beach line changes its shape, and need to be entered into the queue at that time
 			circlepoint = new CirclePoint(d4, d5, arcnode);
 		}
 		return circlepoint;

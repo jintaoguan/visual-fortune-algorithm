@@ -14,6 +14,12 @@ class ArcNode extends ParabolaPoint
 		super(mypoint);
 	}
 
+    /**
+     * A circle event is calculated by comparing the breakpoints on either side of the arc.
+     * If there are one or no breakpoints, no circle event will occur.
+     * If there are two breakpoints, then a test needs to be made to see if these breakpoints will converge.
+     * If they will converge, this means that this is a potential circle event and needs to be entered into the priority queue.
+     */
 	public void checkCircle (EventQueue eventqueue)
 	{
 		if(Prev != null && Next != null)
@@ -68,6 +74,7 @@ class ArcNode extends ParabolaPoint
 		}
 	}
 
+    //When a new arc appears on the beach line it will divide an existing arc into two segments
 	public void insert (ParabolaPoint parabolapoint, double sline, EventQueue eventqueue)
 		throws Throwable
 	{
@@ -183,6 +190,7 @@ class ArcNode extends ParabolaPoint
 	}
 
 	ArcNode Next, Prev;
+    //Finally, each leaf also stores a pointer to a circle event in the priority queue where the arc defined by this site will disappear
 	CirclePoint circlePoint;
 	MyPoint startOfTrace;
 }

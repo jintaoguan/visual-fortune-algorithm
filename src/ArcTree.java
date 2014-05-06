@@ -6,6 +6,7 @@
 import java.awt.Graphics;
 import java.io.PrintStream;
 
+//A balanced binary search tree is used to maintain the status of the beach line
 class ArcTree
 {
 	public void insert (MyPoint mypoint, double d, EventQueue eventqueue)

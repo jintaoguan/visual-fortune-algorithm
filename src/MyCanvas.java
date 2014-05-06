@@ -22,6 +22,7 @@ class MyCanvas extends Canvas
 		Voronoi = new VoronoiClass(i, j, k);
 	}
 
+    //Initialized data structures. Insert site events into the priority queue based on their y-coordinate value.
 	public synchronized void init()
 	{
 		offScreenImage = createImage(getBounds().width, getBounds().height);
@@ -31,6 +32,7 @@ class MyCanvas extends Canvas
 		Events = new EventQueue();
 		Voronoi.clear();
 		Delaunay = new DelaunayClass();
+        //site events are known beforehand and can be entered into the priority queue during initialization
 		for(int i = 0; i < Voronoi.size(); i++)
 		{
 			Events.insert(new EventPoint((MyPoint)Voronoi.elementAt(i)));

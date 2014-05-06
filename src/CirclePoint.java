@@ -48,5 +48,7 @@ class CirclePoint extends EventPoint
 	}
 
 	double radius;
+
+    //the arc (leaf) in the binary tree that will disappear when this circle event occurs
 	ArcNode arc;
 }
