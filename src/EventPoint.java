@@ -3,8 +3,6 @@
 // Decompiler options: packfields(5) packimports(3) nocasts braces 
 // Source File Name:   Fortune.java
 
-import java.io.PrintStream;
-
 class EventPoint extends MyPoint
 {
 
@@ -18,6 +16,8 @@ class EventPoint extends MyPoint
 		super(d, d1);
 	}
 
+    //insert event point to the queue, no mater it's point or circle
+    //queue is a ranked double linked list
 	public void insert(EventPoint eventpoint)
 	{
 		if(eventpoint.x > x || eventpoint.x == x && eventpoint.y > y)
@@ -53,7 +53,7 @@ class EventPoint extends MyPoint
 
 	public void action(MyCanvas mycanvas)
 	{
-		mycanvas.Arcs.insert(this, mycanvas.XPos, mycanvas.Events);
+		mycanvas.arcTree.insert(this, mycanvas.XPos, mycanvas.queue);
 	}
 
 	EventPoint Prev, Next;
