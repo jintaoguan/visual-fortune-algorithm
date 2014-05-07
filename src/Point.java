@@ -1,28 +1,23 @@
-// Decompiled by Jad v1.5.7c. Copyright 1997-99 Pavel Kouznetsov.
-// Jad home page: http://www.geocities.com/SiliconValley/Bridge/8617/jad.html
-// Decompiler options: packfields(5) packimports(3) nocasts braces 
-// Source File Name:   Fortune.java
 
 import java.awt.Graphics;
-import java.awt.Point;
 
-class MyPoint
+class Point
 	implements Paintable
 {
 
-	public MyPoint(double d, double d1)
+	public Point(double d, double d1)
 	{
 		x = d;
 		y = d1;
 	}
 
-	public MyPoint(MyPoint mypoint)
+	public Point(Point mypoint)
 	{
 		x = mypoint.x;
 		y = mypoint.y;
 	}
 
-	public MyPoint(Point point)
+	public Point(java.awt.Point point)
 	{
 		x = point.x;
 		y = point.y;
@@ -41,7 +36,7 @@ class MyPoint
 //		g.drawOval((int)(x - 4.0), (int)(y - 4.0), 9, 9);
 	}
 
-	public double distance(MyPoint mypoint)
+	public double distance(Point mypoint)
 	{
 		double d = mypoint.x - x;
 		double d1 = mypoint.y - y;

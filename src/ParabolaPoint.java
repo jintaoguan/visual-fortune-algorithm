@@ -1,13 +1,8 @@
-// Decompiled by Jad v1.5.7c. Copyright 1997-99 Pavel Kouznetsov.
-// Jad home page: http://www.geocities.com/SiliconValley/Bridge/8617/jad.html
-// Decompiler options: packfields(5) packimports(3) nocasts braces 
-// Source File Name:   Fortune.java
 
-
-class ParabolaPoint extends MyPoint
+class ParabolaPoint extends Point
 {
 
-	public ParabolaPoint(MyPoint mypoint)
+	public ParabolaPoint(Point mypoint)
 	{
 		super(mypoint);
 	}
@@ -24,11 +19,11 @@ class ParabolaPoint extends MyPoint
 		return d - x;
 	}
 
-	public CirclePoint calculateCenter(MyPoint mypoint, ArcNode arcnode, MyPoint mypoint1)
+	public CirclePoint calculateCenter(Point mypoint, ArcNode arcnode, Point mypoint1)
 	{
 		CirclePoint circlepoint = null;
-		MyPoint mypoint2 = new MyPoint(arcnode.x - mypoint.x, arcnode.y - mypoint.y);
-		MyPoint mypoint3 = new MyPoint(mypoint1.x - arcnode.x, mypoint1.y - arcnode.y);
+		Point mypoint2 = new Point(arcnode.x - mypoint.x, arcnode.y - mypoint.y);
+		Point mypoint3 = new Point(mypoint1.x - arcnode.x, mypoint1.y - arcnode.y);
 		if(mypoint3.y * mypoint2.x > mypoint3.x * mypoint2.y)
 		{
 			double d = -mypoint2.x / mypoint2.y;

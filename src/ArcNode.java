@@ -1,13 +1,9 @@
-// Decompiled by Jad v1.5.7c. Copyright 1997-99 Pavel Kouznetsov.
-// Jad home page: http://www.geocities.com/SiliconValley/Bridge/8617/jad.html
-// Decompiler options: packfields(5) packimports(3) nocasts braces 
-// Source File Name:   Fortune.java
 
 import java.awt.*;
 
 class ArcNode extends ParabolaPoint
 {
-	public ArcNode (MyPoint mypoint)
+	public ArcNode (Point mypoint)
 	{
 		super(mypoint);
 	}
@@ -37,17 +33,16 @@ class ArcNode extends ParabolaPoint
 		}
 	}
 
-	public void completeTrace (MyCanvas mycanvas, MyPoint mypoint)
+	public void completeTrace (DrawingPaper mycanvas, Point mypoint)
 	{
 		if(startOfTrace != null)
 		{
-			mycanvas.Voronoi.addElement(new MyLine(startOfTrace, mypoint));
-			mycanvas.Delaunay.addElement(new MyLine(this, next));
+			mycanvas.Voronoi.addElement(new Line(startOfTrace, mypoint));
 			startOfTrace = null;
 		}
 	}
 
-	public void checkBounds (MyCanvas mycanvas, double d)
+	public void checkBounds (DrawingPaper mycanvas, double d)
 	{
 		if(next != null)
 		{
@@ -61,7 +56,7 @@ class ArcNode extends ParabolaPoint
 					double d2 = d - getYCoordinateOfParabolaByX(d1);
 					Rectangle rectangle = mycanvas.getBounds();
 					if(d2 < startOfTrace.x && d2 < 0.0D || d1 < 0.0D || d2 >= (double)rectangle.width || d1 >= (double)rectangle.height)
-						completeTrace(mycanvas, new MyPoint(d2, d1));
+						completeTrace(mycanvas, new Point(d2, d1));
 				}
 				catch(Throwable _ex)
 				{
@@ -119,8 +114,8 @@ class ArcNode extends ParabolaPoint
 			next.next.checkCircle(eventqueue);
 
 			next.next.startOfTrace = startOfTrace;
-			startOfTrace = new MyPoint(sline - getYCoordinateOfParabolaByX(parabolapoint.y), parabolapoint.y);
-			next.startOfTrace = new MyPoint(sline - getYCoordinateOfParabolaByX(parabolapoint.y), parabolapoint.y);
+			startOfTrace = new Point(sline - getYCoordinateOfParabolaByX(parabolapoint.y), parabolapoint.y);
+			next.startOfTrace = new Point(sline - getYCoordinateOfParabolaByX(parabolapoint.y), parabolapoint.y);
 		}
 		else
 		{
@@ -198,5 +193,5 @@ class ArcNode extends ParabolaPoint
 	ArcNode next, prev;
     //Finally, each leaf also stores a pointer to a circle event in the priority queue where the arc defined by this site will disappear
 	CirclePoint circlePoint;
-	MyPoint startOfTrace;
+	Point startOfTrace;
 }

@@ -1,14 +1,9 @@
-// Decompiled by Jad v1.5.7c. Copyright 1997-99 Pavel Kouznetsov.
-// Jad home page: http://www.geocities.com/SiliconValley/Bridge/8617/jad.html
-// Decompiler options: packfields(5) packimports(3) nocasts braces 
-// Source File Name:   Fortune.java
-
 import java.awt.Graphics;
 
 //A ranked list, with x-coordinate from max to min in converted space
 class ArcTree
 {
-	public void insert (MyPoint mypoint, double d, EventQueue eventqueue)
+	public void insert (Point mypoint, double d, EventQueue eventqueue)
 	{
         //if null, set event as root
 		if(root == null)
@@ -31,7 +26,7 @@ class ArcTree
 		}
 	}
 
-	public void checkBounds (MyCanvas mycanvas, double d)
+	public void checkBounds (DrawingPaper mycanvas, double d)
 	{
 		if(root != null)
 		{

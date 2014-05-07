@@ -1,26 +1,22 @@
-// Decompiled by Jad v1.5.7c. Copyright 1997-99 Pavel Kouznetsov.
-// Jad home page: http://www.geocities.com/SiliconValley/Bridge/8617/jad.html
-// Decompiler options: packfields(5) packimports(3) nocasts braces 
-// Source File Name:   Fortune.java
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-class MyCanvas extends Canvas
+class DrawingPaper extends Canvas
 	implements MouseListener
 {
 
-	public MyCanvas(int i, int j, int k)
+	public DrawingPaper(int i, int j)
 	{
+        setSize(i, j);
 		drawCircles = false;
 		drawBeach = true;
 		drawVoronoiLines = true;
-		drawDelaunay = false;
 		addMouseListener(this);
 
         //the points vector
-		Voronoi = new VoronoiClass(i, j, k);
+		Voronoi = new VoronoiPoints(i, j);
 	}
 
     //Initialized data structures. Insert site events into the priority queue based on their x-coordinate value.
@@ -32,11 +28,10 @@ class MyCanvas extends Canvas
 		arcTree = new ArcTree();
 		queue = new EventQueue();
 		Voronoi.clear();
-		Delaunay = new DelaunayClass();
         //site events are known beforehand and can be entered into the priority queue during initialization
 		for(int i = 0; i < Voronoi.size(); i++)
 		{
-			queue.insert(new EventPoint((MyPoint) Voronoi.elementAt(i)));
+			queue.insert(new EventPoint((Point) Voronoi.elementAt(i)));
 		}
 
 	}
@@ -59,7 +54,7 @@ class MyCanvas extends Canvas
 
 	public synchronized void mousePressed(MouseEvent mouseevent)
 	{
-		MyPoint mypoint = new MyPoint(mouseevent.getPoint());
+		Point mypoint = new Point(mouseevent.getPoint());
 		if(mypoint.x > (double)XPos)
 		{
 			Voronoi.addElement(mypoint);
@@ -82,11 +77,6 @@ class MyCanvas extends Canvas
 			g.setColor(Color.black);
 			queue.paint(g, drawCircles);
 			arcTree.paint(g, XPos, drawVoronoiLines, drawBeach);
-		}
-		if(drawDelaunay)
-		{
-			g.setColor(Color.gray);
-			Delaunay.paint(g);
 		}
 	}
 
@@ -143,7 +133,7 @@ class MyCanvas extends Canvas
 
 	public synchronized void clear()
 	{
-		Voronoi = new VoronoiClass(getBounds().width, getBounds().height, 0);
+		Voronoi = new VoronoiPoints(getBounds().width, getBounds().height);
 		restart();
 	}
 
@@ -156,9 +146,8 @@ class MyCanvas extends Canvas
 	Graphics offScreenGraphics;
 	Image offScreenImage;
 	int XPos;
-	VoronoiClass Voronoi;
-	DelaunayClass Delaunay;
-	boolean drawCircles, drawBeach, drawVoronoiLines, drawDelaunay;
+	VoronoiPoints Voronoi;
+	boolean drawCircles, drawBeach, drawVoronoiLines;
 	EventQueue queue;
 	ArcTree arcTree;
 }

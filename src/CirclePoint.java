@@ -1,7 +1,3 @@
-// Decompiled by Jad v1.5.7c. Copyright 1997-99 Pavel Kouznetsov.
-// Jad home page: http://www.geocities.com/SiliconValley/Bridge/8617/jad.html
-// Decompiler options: packfields(5) packimports(3) nocasts braces 
-// Source File Name:   Fortune.java
 
 import java.awt.Graphics;
 
@@ -23,12 +19,12 @@ class CirclePoint extends EventPoint
 		g.drawOval((int)(x - 2D * d), (int)(y - d), (int)(2D * d), (int)(2D * d));
 	}
 
-	public void action(MyCanvas mycanvas)
+	public void action(DrawingPaper mycanvas)
 	{
 		ArcNode arcnode = arc.prev;
 		ArcNode arcnode1 = arc.next;
         //convert to real space
-		MyPoint mypoint = new MyPoint(x - radius, y);
+		Point mypoint = new Point(x - radius, y);
 
         //Update breakpoints involving the arc that is disappearing in this event.  The edges that these breakpoints point to will be finishing.
 		arc.completeTrace(mycanvas, mypoint);
