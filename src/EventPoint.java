@@ -22,30 +22,30 @@ class EventPoint extends MyPoint
 	{
 		if(eventpoint.x > x || eventpoint.x == x && eventpoint.y > y)
 		{
-			if(Next != null)
+			if(next != null)
 			{
-				Next.insert(eventpoint);
+				next.insert(eventpoint);
 				return;
 			} else
 			{
-				Next = eventpoint;
-				eventpoint.Prev = this;
+				next = eventpoint;
+				eventpoint.prev = this;
 				return;
 			}
 		}
 		if(eventpoint.x != x || eventpoint.y != y || (eventpoint instanceof CirclePoint))
 		{
-			eventpoint.Prev = Prev;
-			eventpoint.Next = this;
-			if(Prev != null)
+			eventpoint.prev = prev;
+			eventpoint.next = this;
+			if(prev != null)
 			{
-				Prev.Next = eventpoint;
+				prev.next = eventpoint;
 			}
-			Prev = eventpoint;
+			prev = eventpoint;
 			return;
 		} else
 		{
-			eventpoint.Prev = eventpoint;
+			eventpoint.prev = eventpoint;
 			System.out.println("Double point ignored: " + eventpoint.toString());
 			return;
 		}
@@ -56,5 +56,5 @@ class EventPoint extends MyPoint
 		mycanvas.arcTree.insert(this, mycanvas.XPos, mycanvas.queue);
 	}
 
-	EventPoint Prev, Next;
+	EventPoint prev, next;
 }

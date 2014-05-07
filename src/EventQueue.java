@@ -13,18 +13,18 @@ class EventQueue
 		if(nextRightHandSideEvent != null)
 			nextRightHandSideEvent.insert(p);
 
-		if(p.Prev == null)
+		if(p.prev == null)
 			nextRightHandSideEvent = p;
 	}
 
 	public void remove (EventPoint eventpoint)
 	{
-		if(eventpoint.Next != null)
-			eventpoint.Next.Prev = eventpoint.Prev;
+		if(eventpoint.next != null)
+			eventpoint.next.prev = eventpoint.prev;
 
-		if(eventpoint.Prev != null)
-				eventpoint.Prev.Next = eventpoint.Next;
-		else	nextRightHandSideEvent = eventpoint.Next;
+		if(eventpoint.prev != null)
+				eventpoint.prev.next = eventpoint.next;
+		else	nextRightHandSideEvent = eventpoint.next;
 	}
 
 	public EventPoint pop ()
@@ -32,10 +32,10 @@ class EventQueue
 		EventPoint eventpoint = nextRightHandSideEvent;
 		if(eventpoint != null)
 		{
-			nextRightHandSideEvent = nextRightHandSideEvent.Next;
+			nextRightHandSideEvent = nextRightHandSideEvent.next;
 			if(nextRightHandSideEvent != null)
 			{
-				nextRightHandSideEvent.Prev = null;
+				nextRightHandSideEvent.prev = null;
 			}
 		}
 		return eventpoint;
@@ -43,7 +43,7 @@ class EventQueue
 
 	public void paint(Graphics g, boolean flag)
 	{
-		for(EventPoint eventpoint = nextRightHandSideEvent; eventpoint != null; eventpoint = eventpoint.Next)
+		for(EventPoint eventpoint = nextRightHandSideEvent; eventpoint != null; eventpoint = eventpoint.next)
 		{
 			if(flag || !(eventpoint instanceof CirclePoint))
 			{

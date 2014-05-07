@@ -20,9 +20,9 @@ class ArcNode extends ParabolaPoint
      */
 	public void checkCircle (EventQueue eventqueue)
 	{
-		if(Prev != null && Next != null)
+		if(prev != null && next != null)
 		{
-			circlePoint = calculateCenter(Next, this, Prev);
+			circlePoint = calculateCenter(next, this, prev);
 			if(circlePoint != null)
 				eventqueue.insert(circlePoint);
 		}
@@ -42,21 +42,21 @@ class ArcNode extends ParabolaPoint
 		if(startOfTrace != null)
 		{
 			mycanvas.Voronoi.addElement(new MyLine(startOfTrace, mypoint));
-			mycanvas.Delaunay.addElement(new MyLine(this, Next));
+			mycanvas.Delaunay.addElement(new MyLine(this, next));
 			startOfTrace = null;
 		}
 	}
 
 	public void checkBounds (MyCanvas mycanvas, double d)
 	{
-		if(Next != null)
+		if(next != null)
 		{
-			Next.init(d);
-			if(d > Next.x && d > x && startOfTrace != null)
+			next.init(d);
+			if(d > next.x && d > x && startOfTrace != null)
 			{
 				try
 				{
-					double ad[] = solveQuadratic(a - Next.a, b - Next.b, c - Next.c);
+					double ad[] = solveQuadratic(a - next.a, b - next.b, c - next.c);
 					double d1 = ad[0];
 					double d2 = d - getYCoordinateOfParabolaByX(d1);
 					Rectangle rectangle = mycanvas.getBounds();
@@ -68,7 +68,7 @@ class ArcNode extends ParabolaPoint
 					System.out.println("*** exception");
 				}
 			}
-			Next.checkBounds(mycanvas, d);
+			next.checkBounds(mycanvas, d);
 		}
 	}
 
@@ -77,12 +77,13 @@ class ArcNode extends ParabolaPoint
 		throws Throwable
 	{
 		boolean split = true;
-		if(Next != null)
+		if(next != null)
 		{
-			Next.init(sline);
-			if(sline > Next.x && sline > x)
+			next.init(sline);
+			if(sline > next.x && sline > x)
 			{
-				double xs[] = solveQuadratic(a - Next.a, b - Next.b, c - Next.c);
+                //get the two intersection x coordinates
+				double xs[] = solveQuadratic(a - next.a, b - next.b, c - next.c);
 				if(xs[0] <= parabolapoint.realX() && xs[0] != xs[1])
 					split = false;
 			}
@@ -94,36 +95,43 @@ class ArcNode extends ParabolaPoint
 
 		if(split)
 		{
+            //delete circle events involving this arc from the queue
 			removeCircle(eventqueue);
 
+            //add this arc to the arc tree
 			ArcNode arcnode = new ArcNode(parabolapoint);
-			arcnode.Next = new ArcNode(this);
-			arcnode.Prev = this;
-			arcnode.Next.Next = Next;
-			arcnode.Next.Prev = arcnode;
+			arcnode.next = new ArcNode(this);
+			arcnode.prev = this;
+			arcnode.next.next = next;
+			arcnode.next.prev = arcnode;
 
-			if(Next != null)
-				Next.Prev = arcnode.Next;
+			if(next != null)
+				next.prev = arcnode.next;
 
-			Next = arcnode;
+			next = arcnode;
 
+            //Check for circle events caused by this new site
+            //Note that we don’t have to check the triple of leaves where the new site is the middle leaf, because the breakpoints can’t converge.
+            // Instead, check the triples where this new site is the far left and far right arc.
+            // If the breakpoints are converging, calculate the circle event priority and place it in the queue.
+            // Make a pointer from the middle leaf (the leaf that will disappear in the circle event) to the event in the queue.
 			checkCircle(eventqueue);
-			Next.Next.checkCircle(eventqueue);
+			next.next.checkCircle(eventqueue);
 
-			Next.Next.startOfTrace = startOfTrace;
+			next.next.startOfTrace = startOfTrace;
 			startOfTrace = new MyPoint(sline - getYCoordinateOfParabolaByX(parabolapoint.y), parabolapoint.y);
-			Next.startOfTrace = new MyPoint(sline - getYCoordinateOfParabolaByX(parabolapoint.y), parabolapoint.y);
+			next.startOfTrace = new MyPoint(sline - getYCoordinateOfParabolaByX(parabolapoint.y), parabolapoint.y);
 		}
 		else
 		{
-			Next.insert(parabolapoint, sline, eventqueue);
+			next.insert(parabolapoint, sline, eventqueue);
 		}
 	}
 
 	public void paint (Graphics g, double d, double d1, boolean flag, boolean drawBeach)
 	{
 		double d2 = g.getClipBounds().height;
-		ArcNode arcnode = Next;
+		ArcNode arcnode = next;
 		if(arcnode != null)
 		{
 			arcnode.init(d);
@@ -183,11 +191,11 @@ class ArcNode extends ParabolaPoint
 			}
 		}
 
-		if(Next != null)
-			Next.paint(g, d, Math.max(0.0D, d2), flag, drawBeach);
+		if(next != null)
+			next.paint(g, d, Math.max(0.0D, d2), flag, drawBeach);
 	}
 
-	ArcNode Next, Prev;
+	ArcNode next, prev;
     //Finally, each leaf also stores a pointer to a circle event in the priority queue where the arc defined by this site will disappear
 	CirclePoint circlePoint;
 	MyPoint startOfTrace;

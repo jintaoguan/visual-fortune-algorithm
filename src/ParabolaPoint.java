@@ -12,6 +12,8 @@ class ParabolaPoint extends MyPoint
 		super(mypoint);
 	}
 
+    //real x and y are the points in a downwards sweeping space with sweeping line's x coordinate as origin
+    //which is equal to the old space
 	public double realX()
 	{
 		return y;
@@ -69,6 +71,7 @@ class ParabolaPoint extends MyPoint
 		return (a * d + b) * d + c;
 	}
 
+    //calculate the x value of a quadratic formulate: ax^2 + bx + c = 0
 	public double[] solveQuadratic(double d, double d1, double d2)
 		throws Throwable
 	{

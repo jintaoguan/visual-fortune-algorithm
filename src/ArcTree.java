@@ -5,11 +5,12 @@
 
 import java.awt.Graphics;
 
-//A balanced binary search tree is used to maintain the status of the beach line
+//A ranked list, with x-coordinate from max to min in converted space
 class ArcTree
 {
 	public void insert (MyPoint mypoint, double d, EventQueue eventqueue)
 	{
+        //if null, set event as root
 		if(root == null)
 		{
 			root = new ArcNode(mypoint);
@@ -20,6 +21,7 @@ class ArcTree
 			ParabolaPoint parabolapoint = new ParabolaPoint(mypoint);
 			parabolapoint.init(d);
 			root.init(d);
+            //insert this site event to arcTree
 			root.insert(parabolapoint, d, eventqueue);
 			return;
 		}
