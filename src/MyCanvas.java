@@ -6,7 +6,6 @@
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Vector;
 
 class MyCanvas extends Canvas
 	implements MouseListener
@@ -19,23 +18,25 @@ class MyCanvas extends Canvas
 		drawVoronoiLines = true;
 		drawDelaunay = false;
 		addMouseListener(this);
+
+        //the points vector
 		Voronoi = new VoronoiClass(i, j, k);
 	}
 
-    //Initialized data structures. Insert site events into the priority queue based on their y-coordinate value.
+    //Initialized data structures. Insert site events into the priority queue based on their x-coordinate value.
 	public synchronized void init()
 	{
 		offScreenImage = createImage(getBounds().width, getBounds().height);
 		offScreenGraphics = offScreenImage.getGraphics();
 		XPos = 0;
-		Arcs = new ArcTree();
-		Events = new EventQueue();
+		arcTree = new ArcTree();
+		queue = new EventQueue();
 		Voronoi.clear();
 		Delaunay = new DelaunayClass();
         //site events are known beforehand and can be entered into the priority queue during initialization
 		for(int i = 0; i < Voronoi.size(); i++)
 		{
-			Events.insert(new EventPoint((MyPoint)Voronoi.elementAt(i)));
+			queue.insert(new EventPoint((MyPoint) Voronoi.elementAt(i)));
 		}
 
 	}
@@ -63,7 +64,7 @@ class MyCanvas extends Canvas
 		{
 			Voronoi.addElement(mypoint);
 			Voronoi.checkDegenerate();
-			Events.insert(new EventPoint(mypoint));
+			queue.insert(new EventPoint(mypoint));
 			repaint();
 		}
 	}
@@ -76,11 +77,11 @@ class MyCanvas extends Canvas
 		Voronoi.paint(g, drawVoronoiLines);
 		g.setColor(Color.red);
 		g.drawLine(XPos, 0, XPos, getBounds().height);
-		if(Events != null && Arcs != null)
+		if(queue != null && arcTree != null)
 		{
 			g.setColor(Color.black);
-			Events.paint(g, drawCircles);
-			Arcs.paint(g, XPos, drawVoronoiLines, drawBeach);
+			queue.paint(g, drawCircles);
+			arcTree.paint(g, XPos, drawVoronoiLines, drawBeach);
 		}
 		if(drawDelaunay)
 		{
@@ -97,29 +98,33 @@ class MyCanvas extends Canvas
 //		paint(g);
 	}
 
+    //sweep by pix
 	public synchronized boolean singlestep ()
 	{
-		if(Events.Events == null || (double)XPos < Events.Events.x)
+        //if we have not reached first event
+        //or current pix does not have event
+		if(queue.nextRightHandSideEvent == null || (double)XPos < queue.nextRightHandSideEvent.x)
 			XPos++;
 
-		while(Events.Events != null && (double)XPos >= Events.Events.x) 
+        //we encounter the next event
+		while(queue.nextRightHandSideEvent != null && (double)XPos >= queue.nextRightHandSideEvent.x)
 		{
-			EventPoint eventpoint = Events.pop();
+			EventPoint eventpoint = queue.pop();
 			XPos = Math.max(XPos, (int)eventpoint.x);
 			eventpoint.action(this);
-			Arcs.checkBounds(this, XPos);
+			arcTree.checkBounds(this, XPos);
 		}
 
-		if(XPos > getBounds().width && Events.Events == null)
-			Arcs.checkBounds(this, XPos);
+		if(XPos > getBounds().width && queue.nextRightHandSideEvent == null)
+			arcTree.checkBounds(this, XPos);
 
 		repaint();
-		return Events.Events != null || XPos < 1000 + getBounds().width;
+		return queue.nextRightHandSideEvent != null || XPos < 1000 + getBounds().width;
 	}
 
 	public synchronized void step()
 	{
-		EventPoint eventpoint = Events.pop();
+		EventPoint eventpoint = queue.pop();
 		if(eventpoint != null)
 		{
 			XPos = Math.max(XPos, (int)eventpoint.x);
@@ -132,7 +137,7 @@ class MyCanvas extends Canvas
 		{
 			init();
 		}
-		Arcs.checkBounds(this, XPos);
+		arcTree.checkBounds(this, XPos);
 		repaint();
 	}
 
@@ -154,6 +159,6 @@ class MyCanvas extends Canvas
 	VoronoiClass Voronoi;
 	DelaunayClass Delaunay;
 	boolean drawCircles, drawBeach, drawVoronoiLines, drawDelaunay;
-	EventQueue Events;
-	ArcTree Arcs;
+	EventQueue queue;
+	ArcTree arcTree;
 }

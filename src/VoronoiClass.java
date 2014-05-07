@@ -28,6 +28,7 @@ class VoronoiClass extends Vector
 	}
 
 
+    //make sure the most left two points have different x-coordinate
 	public void checkDegenerate ()
 	{
 		if(size() > 1)

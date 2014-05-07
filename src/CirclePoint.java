@@ -35,16 +35,16 @@ class CirclePoint extends EventPoint
 		arcnode1.Prev = arcnode;
 		if(arcnode.circlePoint != null)
 		{
-			mycanvas.Events.remove(arcnode.circlePoint);
+			mycanvas.queue.remove(arcnode.circlePoint);
 			arcnode.circlePoint = null;
 		}
 		if(arcnode1.circlePoint != null)
 		{
-			mycanvas.Events.remove(arcnode1.circlePoint);
+			mycanvas.queue.remove(arcnode1.circlePoint);
 			arcnode1.circlePoint = null;
 		}
-		arcnode.checkCircle(mycanvas.Events);
-		arcnode1.checkCircle(mycanvas.Events);
+		arcnode.checkCircle(mycanvas.queue);
+		arcnode1.checkCircle(mycanvas.queue);
 	}
 
 	double radius;

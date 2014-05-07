@@ -64,7 +64,7 @@ class ParabolaPoint extends MyPoint
 		c = (d1 * d1) / (2D * d2) + d2 / 2D;
 	}
 
-	public double F(double d)
+	public double getYCoordinateOfParabolaByX(double d)
 	{
 		return (a * d + b) * d + c;
 	}
@@ -98,5 +98,6 @@ class ParabolaPoint extends MyPoint
 		return ad;
 	}
 
+    //parameters of parabola function: ax^2 + bx + c = y
 	double a, b, c;
 }

@@ -4,24 +4,23 @@
 // Source File Name:   Fortune.java
 
 import java.awt.Graphics;
-import java.io.PrintStream;
 
 //A balanced binary search tree is used to maintain the status of the beach line
 class ArcTree
 {
 	public void insert (MyPoint mypoint, double d, EventQueue eventqueue)
 	{
-		if(Arcs == null)
+		if(root == null)
 		{
-			Arcs = new ArcNode(mypoint);
+			root = new ArcNode(mypoint);
 			return;
 		}
 		try
 		{
 			ParabolaPoint parabolapoint = new ParabolaPoint(mypoint);
 			parabolapoint.init(d);
-			Arcs.init(d);
-			Arcs.insert(parabolapoint, d, eventqueue);
+			root.init(d);
+			root.insert(parabolapoint, d, eventqueue);
 			return;
 		}
 		catch(Throwable _ex)
@@ -32,21 +31,21 @@ class ArcTree
 
 	public void checkBounds (MyCanvas mycanvas, double d)
 	{
-		if(Arcs != null)
+		if(root != null)
 		{
-			Arcs.init(d);
-			Arcs.checkBounds(mycanvas, d);
+			root.init(d);
+			root.checkBounds(mycanvas, d);
 		}
 	}
 
 	public void paint (Graphics g, double d, boolean flag, boolean drawBeach)
 	{
-		if(Arcs != null)
+		if(root != null)
 		{
-			Arcs.init(d);
-			Arcs.paint(g, d, 0.0D, flag, drawBeach);
+			root.init(d);
+			root.paint(g, d, 0.0D, flag, drawBeach);
 		}
 	}
 
-	ArcNode Arcs;
+	ArcNode root;
 }

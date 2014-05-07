@@ -4,8 +4,6 @@
 // Source File Name:   Fortune.java
 
 import java.awt.*;
-import java.io.PrintStream;
-import java.util.Vector;
 
 class ArcNode extends ParabolaPoint
 {
@@ -60,7 +58,7 @@ class ArcNode extends ParabolaPoint
 				{
 					double ad[] = solveQuadratic(a - Next.a, b - Next.b, c - Next.c);
 					double d1 = ad[0];
-					double d2 = d - F(d1);
+					double d2 = d - getYCoordinateOfParabolaByX(d1);
 					Rectangle rectangle = mycanvas.getBounds();
 					if(d2 < startOfTrace.x && d2 < 0.0D || d1 < 0.0D || d2 >= (double)rectangle.width || d1 >= (double)rectangle.height)
 						completeTrace(mycanvas, new MyPoint(d2, d1));
@@ -113,8 +111,8 @@ class ArcNode extends ParabolaPoint
 			Next.Next.checkCircle(eventqueue);
 
 			Next.Next.startOfTrace = startOfTrace;
-			startOfTrace = new MyPoint(sline - F(parabolapoint.y), parabolapoint.y);
-			Next.startOfTrace = new MyPoint(sline - F(parabolapoint.y), parabolapoint.y);
+			startOfTrace = new MyPoint(sline - getYCoordinateOfParabolaByX(parabolapoint.y), parabolapoint.y);
+			Next.startOfTrace = new MyPoint(sline - getYCoordinateOfParabolaByX(parabolapoint.y), parabolapoint.y);
 		}
 		else
 		{
@@ -132,7 +130,7 @@ class ArcNode extends ParabolaPoint
 		}
 		if(d == x)
 		{
-			double d3 = arcnode != null ? d - arcnode.F(y) : 0.0D;
+			double d3 = arcnode != null ? d - arcnode.getYCoordinateOfParabolaByX(y) : 0.0D;
 			if(drawBeach)
 				g.drawLine((int)d3, (int)y, (int)d, (int)y);
 			d2 = y;
@@ -166,7 +164,7 @@ class ArcNode extends ParabolaPoint
 				double d4 = 0.0D;
 				for(double d5 = d1; d5 < Math.min(Math.max(0.0D, d2), g.getClipBounds().height); d5 += i)
 				{
-					double d6 = d - F(d5);
+					double d6 = d - getYCoordinateOfParabolaByX(d5);
 					if(d5 > d1 && (d4 >= 0.0D || d6 >= 0.0D))
 					{
 						g.drawLine((int)d4, (int)(d5 - (double)i), (int)d6, (int)d5);
@@ -177,7 +175,7 @@ class ArcNode extends ParabolaPoint
 
 			if(flag && startOfTrace != null)
 			{
-				double d7 = d - F(d2);
+				double d7 = d - getYCoordinateOfParabolaByX(d2);
 				double d8 = d2;
 				g.getClipBounds();
 				g.getClipBounds();
