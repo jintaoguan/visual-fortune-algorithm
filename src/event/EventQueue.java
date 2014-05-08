@@ -5,9 +5,9 @@ import java.awt.*;
 //A priority queue to keep track of the site events and circle events
 public class EventQueue {
 
-    public EventPoint nextRightHandSideEvent;
+    public PointEvent nextRightHandSideEvent;
 
-    public void insert(EventPoint p) {
+    public void insert(PointEvent p) {
         if (nextRightHandSideEvent != null)
             nextRightHandSideEvent.insert(p);
 
@@ -15,7 +15,7 @@ public class EventQueue {
             nextRightHandSideEvent = p;
     }
 
-    public void remove(EventPoint eventpoint) {
+    public void remove(PointEvent eventpoint) {
         if (eventpoint.next != null)
             eventpoint.next.prev = eventpoint.prev;
 
@@ -24,8 +24,8 @@ public class EventQueue {
         else nextRightHandSideEvent = eventpoint.next;
     }
 
-    public EventPoint pop() {
-        EventPoint eventpoint = nextRightHandSideEvent;
+    public PointEvent pop() {
+        PointEvent eventpoint = nextRightHandSideEvent;
         if (eventpoint != null) {
             nextRightHandSideEvent = nextRightHandSideEvent.next;
             if (nextRightHandSideEvent != null) {
@@ -36,8 +36,8 @@ public class EventQueue {
     }
 
     public void paint(Graphics g, boolean flag) {
-        for (EventPoint eventpoint = nextRightHandSideEvent; eventpoint != null; eventpoint = eventpoint.next) {
-            if (flag || !(eventpoint instanceof CirclePoint)) {
+        for (PointEvent eventpoint = nextRightHandSideEvent; eventpoint != null; eventpoint = eventpoint.next) {
+            if (flag || !(eventpoint instanceof CircleEvent)) {
                 eventpoint.paint(g);
             }
         }

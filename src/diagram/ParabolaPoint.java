@@ -1,7 +1,7 @@
 package diagram;
 
 import arc.BeachLine;
-import event.CirclePoint;
+import event.CircleEvent;
 
 public class ParabolaPoint extends Point {
 
@@ -22,8 +22,8 @@ public class ParabolaPoint extends Point {
         return d - x;
     }
 
-    public CirclePoint calculateCenter(Point mypoint, BeachLine arcnode, Point mypoint1) {
-        CirclePoint circlepoint = null;
+    public CircleEvent calculateCenter(Point mypoint, BeachLine arcnode, Point mypoint1) {
+        CircleEvent circlepoint = null;
         Point mypoint2 = new Point(arcnode.x - mypoint.x, arcnode.y - mypoint.y);
         Point mypoint3 = new Point(mypoint1.x - arcnode.x, mypoint1.y - arcnode.y);
         if (mypoint3.y * mypoint2.x > mypoint3.x * mypoint2.y) {
@@ -44,7 +44,7 @@ public class ParabolaPoint extends Point {
                 d5 = d * d4 + d1;
             }
             //the circle events are detected as the beach line changes its shape, and need to be entered into the queue at that time
-            circlepoint = new CirclePoint(d4, d5, arcnode);
+            circlepoint = new CircleEvent(d4, d5, arcnode);
         }
         return circlepoint;
     }

@@ -6,13 +6,13 @@ import diagram.Point;
 import arc.*;
 import main.*;
 
-public class CirclePoint extends EventPoint {
+public class CircleEvent extends PointEvent {
 
     private double radius;
     //the beachLine (leaf) in the binary tree that will disappear when this circle event occurs
     private BeachLine beachLine;
 
-    public CirclePoint(double d, double d1, BeachLine arcnode) {
+    public CircleEvent(double d, double d1, BeachLine arcnode) {
         super(d, d1);
         beachLine = arcnode;
         radius = distance(arcnode);
@@ -46,13 +46,13 @@ public class CirclePoint extends EventPoint {
         arcnode1.prev = arcnode;
 
         //Check for circle events involving this beachLine in the immediate left and right arcs of the beach line.  If circle events exist at these nodes, delete them.
-        if (arcnode.circlePoint != null) {
-            mycanvas.queue.remove(arcnode.circlePoint);
-            arcnode.circlePoint = null;
+        if (arcnode.circleEvent != null) {
+            mycanvas.queue.remove(arcnode.circleEvent);
+            arcnode.circleEvent = null;
         }
-        if (arcnode1.circlePoint != null) {
-            mycanvas.queue.remove(arcnode1.circlePoint);
-            arcnode1.circlePoint = null;
+        if (arcnode1.circleEvent != null) {
+            mycanvas.queue.remove(arcnode1.circleEvent);
+            arcnode1.circleEvent = null;
         }
 
         //Check new triples of arcs created by this rearranging of the binaryTree for circle events.

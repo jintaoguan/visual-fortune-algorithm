@@ -4,7 +4,7 @@ import arc.*;
 import diagram.Point;
 import diagram.VoronoiDiagram;
 import event.EventQueue;
-import event.EventPoint;
+import event.PointEvent;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -43,7 +43,7 @@ public class DrawingPaper extends Canvas
         voronoi.clear();
         //site events are known beforehand and can be entered into the priority queue during initialization
         for (int i = 0; i < voronoi.size(); i++) {
-            queue.insert(new EventPoint((Point) voronoi.elementAt(i)));
+            queue.insert(new PointEvent((Point) voronoi.elementAt(i)));
         }
 
     }
@@ -66,7 +66,7 @@ public class DrawingPaper extends Canvas
         if (mypoint.x > (double) XPos) {
             voronoi.addElement(mypoint);
             voronoi.checkDegenerate();
-            queue.insert(new EventPoint(mypoint));
+            queue.insert(new PointEvent(mypoint));
             repaint();
         }
 
@@ -75,10 +75,10 @@ public class DrawingPaper extends Canvas
 	    Point mypoint2 = new Point(200,500);
 	    voronoi.addElement(mypoint1);
         voronoi.checkDegenerate();
-        queue.insert(new event.EventPoint(mypoint1));
+        queue.insert(new event.PointEvent(mypoint1));
         voronoi.addElement(mypoint2);
         voronoi.checkDegenerate();
-        queue.insert(new event.EventPoint(mypoint2));
+        queue.insert(new event.PointEvent(mypoint2));
         repaint();
         */
     }
@@ -113,7 +113,7 @@ public class DrawingPaper extends Canvas
 
         //we encounter the next event
         while (queue.nextRightHandSideEvent != null && (double) XPos >= queue.nextRightHandSideEvent.x) {
-            EventPoint eventpoint = queue.pop();
+            PointEvent eventpoint = queue.pop();
             XPos = Math.max(XPos, (int) eventpoint.x);
             eventpoint.action(this);
             beachLineList.checkBounds(this, XPos);
@@ -127,7 +127,7 @@ public class DrawingPaper extends Canvas
     }
 
     public synchronized void step() {
-        EventPoint eventpoint = queue.pop();
+        PointEvent eventpoint = queue.pop();
         if (eventpoint != null) {
             XPos = Math.max(XPos, (int) eventpoint.x);
             eventpoint.action(this);

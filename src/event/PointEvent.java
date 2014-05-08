@@ -3,20 +3,20 @@ package event;
 import diagram.*;
 import main.*;
 
-public class EventPoint extends Point {
+public class PointEvent extends Point {
 
-    public EventPoint prev, next;
-    public EventPoint(Point mypoint) {
+    public PointEvent prev, next;
+    public PointEvent(Point mypoint) {
         super(mypoint);
     }
 
-    EventPoint(double d, double d1) {
+    PointEvent(double d, double d1) {
         super(d, d1);
     }
 
     //insert event point to the queue, no mater it's point or circle
     //queue is a ranked double linked list
-    public void insert(EventPoint eventpoint) {
+    public void insert(PointEvent eventpoint) {
         if (eventpoint.x > x || eventpoint.x == x && eventpoint.y > y) {
             if (next != null) {
                 next.insert(eventpoint);
@@ -27,7 +27,7 @@ public class EventPoint extends Point {
                 return;
             }
         }
-        if (eventpoint.x != x || eventpoint.y != y || (eventpoint instanceof CirclePoint)) {
+        if (eventpoint.x != x || eventpoint.y != y || (eventpoint instanceof CircleEvent)) {
             eventpoint.prev = prev;
             eventpoint.next = this;
             if (prev != null) {

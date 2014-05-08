@@ -7,14 +7,14 @@ import diagram.Point;
 import diagram.Line;
 import diagram.ParabolaPoint;
 import event.EventQueue;
-import event.CirclePoint;
+import event.CircleEvent;
 import main.*;
 
 public class BeachLine extends ParabolaPoint {
 
     public BeachLine next, prev;
     //Finally, each leaf also stores a pointer to a circle event in the priority queue where the arc defined by this site will disappear
-    public CirclePoint circlePoint;
+    public CircleEvent circleEvent;
     //the bottom side of starting point for this arc
     public Point startOfTrace;
 
@@ -30,16 +30,16 @@ public class BeachLine extends ParabolaPoint {
      */
     public void checkCircle(EventQueue eventqueue) {
         if (prev != null && next != null) {
-            circlePoint = calculateCenter(next, this, prev);
-            if (circlePoint != null)
-                eventqueue.insert(circlePoint);
+            circleEvent = calculateCenter(next, this, prev);
+            if (circleEvent != null)
+                eventqueue.insert(circleEvent);
         }
     }
 
     public void removeCircle(EventQueue eventqueue) {
-        if (circlePoint != null) {
-            eventqueue.remove(circlePoint);
-            circlePoint = null;
+        if (circleEvent != null) {
+            eventqueue.remove(circleEvent);
+            circleEvent = null;
         }
     }
 
