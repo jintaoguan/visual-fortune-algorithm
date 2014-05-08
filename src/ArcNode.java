@@ -140,7 +140,7 @@ class ArcNode extends ParabolaPoint
 		}
 		else
 		{
-			if(arcnode != null)
+			if(arcnode != null)  
 			{
 				if(d == arcnode.x)
 				{
@@ -165,13 +165,18 @@ class ArcNode extends ParabolaPoint
 			{
 				int i = 1;
 				double d4 = 0.0D;
+				// paint every points of the parabola in the canvas. 
 				for(double d5 = d1; d5 < Math.min(Math.max(0.0D, d2), g.getClipBounds().height); d5 += i)
 				{
+				    // convert the coordinate of the parabola to the coordinate of the canvas
 					double d6 = d - getYCoordinateOfParabolaByX(d5);
+					
+					// make sure the coordinate is inside this canvas.
 					if(d5 > d1 && (d4 >= 0.0D || d6 >= 0.0D))
 					{
 						g.drawLine((int)d4, (int)(d5 - (double)i), (int)d6, (int)d5);
 					}
+					// iterate
 					d4 = d6;
 				}
 			}
