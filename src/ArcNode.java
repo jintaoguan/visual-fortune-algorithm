@@ -94,8 +94,12 @@ class ArcNode extends ParabolaPoint
 			removeCircle(eventqueue);
 
             //add this arc to the arc tree
+			
+			// this is
 			ArcNode arcnode = new ArcNode(parabolapoint);
+			// this is
 			arcnode.next = new ArcNode(this);
+			
 			arcnode.prev = this;
 			arcnode.next.next = next;
 			arcnode.next.prev = arcnode;
@@ -194,8 +198,6 @@ class ArcNode extends ParabolaPoint
 			{
 				double d7 = d - getYCoordinateOfParabolaByX(d2);
 				double d8 = d2;
-				//g.getClipBounds();
-				//g.getClipBounds();
 				g.drawLine((int)startOfTrace.x, (int)startOfTrace.y, (int)d7, (int)d8);
 			}
 		}
