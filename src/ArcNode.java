@@ -94,8 +94,12 @@ class ArcNode extends ParabolaPoint
 			removeCircle(eventqueue);
 
             //add this arc to the arc tree
+			
+			// this is
 			ArcNode arcnode = new ArcNode(parabolapoint);
+			// this is
 			arcnode.next = new ArcNode(this);
+			
 			arcnode.prev = this;
 			arcnode.next.next = next;
 			arcnode.next.prev = arcnode;
@@ -125,12 +129,21 @@ class ArcNode extends ParabolaPoint
 
 	public void paint (Graphics g, double d, double d1, boolean flag, boolean drawBeach)
 	{
+	    // d is the x-coordinate of the sweeping line.
+	    // d1 is always 0.0
+	    // d2 is the height of the canvas.
+	    // d3 is the horizontal segment to the new site event.
+	    
+	    
 		double d2 = g.getClipBounds().height;
 		ArcNode arcnode = next;
 		if(arcnode != null)
 		{
 			arcnode.init(d);
 		}
+		
+		// (x, y) is the center point of the parabola
+		// (d == x) means the sweeping line is passing the site event
 		if(d == x)
 		{
 			double d3 = arcnode != null ? d - arcnode.getYCoordinateOfParabolaByX(y) : 0.0D;
@@ -140,7 +153,7 @@ class ArcNode extends ParabolaPoint
 		}
 		else
 		{
-			if(arcnode != null)
+			if(arcnode != null)  
 			{
 				if(d == arcnode.x)
 				{
@@ -165,13 +178,18 @@ class ArcNode extends ParabolaPoint
 			{
 				int i = 1;
 				double d4 = 0.0D;
+				// paint every points of the parabola in the canvas. 
 				for(double d5 = d1; d5 < Math.min(Math.max(0.0D, d2), g.getClipBounds().height); d5 += i)
 				{
+				    // convert the coordinate of the parabola to the coordinate of the canvas
 					double d6 = d - getYCoordinateOfParabolaByX(d5);
+					
+					// make sure the coordinate is inside this canvas.
 					if(d5 > d1 && (d4 >= 0.0D || d6 >= 0.0D))
 					{
 						g.drawLine((int)d4, (int)(d5 - (double)i), (int)d6, (int)d5);
 					}
+					// iterate
 					d4 = d6;
 				}
 			}
@@ -180,8 +198,6 @@ class ArcNode extends ParabolaPoint
 			{
 				double d7 = d - getYCoordinateOfParabolaByX(d2);
 				double d8 = d2;
-				g.getClipBounds();
-				g.getClipBounds();
 				g.drawLine((int)startOfTrace.x, (int)startOfTrace.y, (int)d7, (int)d8);
 			}
 		}
