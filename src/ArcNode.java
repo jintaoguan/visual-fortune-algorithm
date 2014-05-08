@@ -125,12 +125,21 @@ class ArcNode extends ParabolaPoint
 
 	public void paint (Graphics g, double d, double d1, boolean flag, boolean drawBeach)
 	{
+	    // d is the x-coordinate of the sweeping line.
+	    // d1 is always 0.0
+	    // d2 is the height of the canvas.
+	    // d3 is the horizontal segment to the new site event.
+	    
+	    
 		double d2 = g.getClipBounds().height;
 		ArcNode arcnode = next;
 		if(arcnode != null)
 		{
 			arcnode.init(d);
 		}
+		
+		// (x, y) is the center point of the parabola
+		// (d == x) means the sweeping line is passing the site event
 		if(d == x)
 		{
 			double d3 = arcnode != null ? d - arcnode.getYCoordinateOfParabolaByX(y) : 0.0D;
@@ -185,8 +194,8 @@ class ArcNode extends ParabolaPoint
 			{
 				double d7 = d - getYCoordinateOfParabolaByX(d2);
 				double d8 = d2;
-				g.getClipBounds();
-				g.getClipBounds();
+				//g.getClipBounds();
+				//g.getClipBounds();
 				g.drawLine((int)startOfTrace.x, (int)startOfTrace.y, (int)d7, (int)d8);
 			}
 		}

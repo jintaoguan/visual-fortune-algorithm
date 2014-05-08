@@ -54,7 +54,7 @@ class DrawingPaper extends Canvas
 
 	public synchronized void mousePressed(MouseEvent mouseevent)
 	{
-	    /*
+	    
 		Point mypoint = new Point(mouseevent.getPoint());
 		if(mypoint.x > (double)XPos)
 		{
@@ -63,7 +63,8 @@ class DrawingPaper extends Canvas
 			queue.insert(new EventPoint(mypoint));
 			repaint();
 		}
-		*/
+		
+	    /*
 	    Point mypoint1 = new Point(100,300);
 	    Point mypoint2 = new Point(200,500);
 	    Voronoi.addElement(mypoint1);
@@ -73,6 +74,7 @@ class DrawingPaper extends Canvas
         Voronoi.checkDegenerate();
         queue.insert(new EventPoint(mypoint2));
         repaint();
+        */
 	}
 
 	public synchronized void paint(Graphics g)
