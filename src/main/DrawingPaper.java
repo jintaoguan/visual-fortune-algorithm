@@ -3,6 +3,7 @@ package main;
 import arc.*;
 import diagram.Point;
 import diagram.VoronoiDiagram;
+import event.CircleEvent;
 import event.EventQueue;
 import event.PointEvent;
 
@@ -13,6 +14,7 @@ import java.awt.event.MouseListener;
 public class DrawingPaper extends Canvas
         implements MouseListener {
 
+    //the sweep line
     public int XPos;
     public VoronoiDiagram voronoi;
     public EventQueue queue;
@@ -62,7 +64,7 @@ public class DrawingPaper extends Canvas
 
     public synchronized void mousePressed(MouseEvent mouseevent) {
 
-        Point mypoint = new Point(mouseevent.getPoint());
+        Point mypoint = new Point(mouseevent.getPoint().getX(), mouseevent.getPoint().getY());
         if (mypoint.x > (double) XPos) {
             voronoi.addElement(mypoint);
             voronoi.checkDegenerate();
@@ -84,14 +86,14 @@ public class DrawingPaper extends Canvas
     }
 
     public synchronized void paint(Graphics g) {
-        g.setColor(Color.white);
+        g.setColor(Color.black);
         g.fillRect(0, 0, getBounds().width, getBounds().height);
         g.setColor(Color.red);
         voronoi.paint(g, drawVoronoiLines);
-        g.setColor(Color.green);
+        g.setColor(Color.blue);
         g.drawLine(XPos, 0, XPos, getBounds().height);
         if (queue != null && beachLineList != null) {
-            g.setColor(Color.black);
+            g.setColor(Color.white);
             queue.paint(g, drawCircles);
             beachLineList.paint(g, XPos, drawVoronoiLines, drawBeach);
         }
@@ -128,6 +130,12 @@ public class DrawingPaper extends Canvas
 
     public synchronized void step() {
         PointEvent eventpoint = queue.pop();
+
+        System.out.println(eventpoint.getClass());
+        if(eventpoint instanceof CircleEvent){
+            System.out.println(((CircleEvent) eventpoint).beachLine.index);
+        }
+
         if (eventpoint != null) {
             XPos = Math.max(XPos, (int) eventpoint.x);
             eventpoint.action(this);

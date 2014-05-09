@@ -1,7 +1,8 @@
 package arc;
 
 
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Rectangle;
 
 import diagram.Point;
 import diagram.Line;
@@ -43,7 +44,7 @@ public class BeachLine extends ParabolaPoint {
         }
     }
 
-    public void completeTrace(DrawingPaper mycanvas, diagram.Point mypoint) {
+    public void completeTrace(DrawingPaper mycanvas, Point mypoint) {
         if (startOfTrace != null) {
             mycanvas.voronoi.addElement(new Line(startOfTrace, mypoint));
             startOfTrace = null;
@@ -60,7 +61,7 @@ public class BeachLine extends ParabolaPoint {
                     double d2 = d - getYCoordinateOfParabolaByX(d1);
                     Rectangle rectangle = mycanvas.getBounds();
                     if (d2 < startOfTrace.x && d2 < 0.0D || d1 < 0.0D || d2 >= (double) rectangle.width || d1 >= (double) rectangle.height)
-                        completeTrace(mycanvas, new diagram.Point(d2, d1));
+                        completeTrace(mycanvas, new Point(d2, d1));
                 } catch (Throwable _ex) {
                     System.out.println("*** exception");
                 }
@@ -113,7 +114,7 @@ public class BeachLine extends ParabolaPoint {
             checkCircle(eventqueue);
             next.next.checkCircle(eventqueue);
 
-
+            //update the beach line's start, the bottom point of each beach
             next.next.startOfTrace = startOfTrace;
             startOfTrace = new Point(sline - getYCoordinateOfParabolaByX(parabolapoint.y), parabolapoint.y);
             next.startOfTrace = new Point(sline - getYCoordinateOfParabolaByX(parabolapoint.y), parabolapoint.y);
@@ -161,7 +162,8 @@ public class BeachLine extends ParabolaPoint {
                 int i = 1;
                 double d4 = 0.0D;
                 // paint every points of the parabola in the canvas.
-                for (double d5 = d1; d5 < Math.min(Math.max(0.0D, d2), g.getClipBounds().height); d5 += i) {
+                double maxBound = Math.min(Math.max(0.0D, d2), g.getClipBounds().height);
+                for (double d5 = d1; d5 < maxBound; d5 += i) {
                     // convert the coordinate of the parabola to the coordinate of the canvas
                     double d6 = d - getYCoordinateOfParabolaByX(d5);
 
@@ -171,6 +173,11 @@ public class BeachLine extends ParabolaPoint {
                     }
                     // iterate
                     d4 = d6;
+                }
+                if(d1 < maxBound){
+                    double midy = (d1 + maxBound) / 2;
+                    double midx = d - getYCoordinateOfParabolaByX(midy);
+                    g.drawString(Integer.toString(index), (int) midx - 2, (int) midy - 2);
                 }
             }
 
@@ -183,5 +190,6 @@ public class BeachLine extends ParabolaPoint {
 
         if (next != null)
             next.paint(g, d, Math.max(0.0D, d2), flag, drawBeach);
+
     }
 }

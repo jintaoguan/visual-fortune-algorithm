@@ -1,6 +1,6 @@
 package event;
 
-import java.awt.*;
+import java.awt.Graphics;
 
 import diagram.Point;
 import arc.*;
@@ -10,7 +10,7 @@ public class CircleEvent extends PointEvent {
 
     private double radius;
     //the beachLine (leaf) in the binary tree that will disappear when this circle event occurs
-    private BeachLine beachLine;
+    public BeachLine beachLine;
 
     public CircleEvent(double d, double d1, BeachLine arcnode) {
         super(d, d1);

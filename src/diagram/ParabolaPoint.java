@@ -5,7 +5,7 @@ import event.CircleEvent;
 
 public class ParabolaPoint extends Point {
 
-    //parameters of parabola function: ax^2 + bx + c = y
+    //parameters of parabola function: ax^2 + bx + c = 0
     public double a, b, c;
 
     public ParabolaPoint(Point mypoint) {

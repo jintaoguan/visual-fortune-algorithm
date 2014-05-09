@@ -1,6 +1,6 @@
 package diagram;
 
-import java.awt.*;
+import java.awt.Graphics;
 import java.util.Vector;
 
 public class VoronoiDiagram extends Vector {

@@ -6,11 +6,12 @@ import main.*;
 public class PointEvent extends Point {
 
     public PointEvent prev, next;
+
     public PointEvent(Point mypoint) {
         super(mypoint);
     }
 
-    PointEvent(double d, double d1) {
+    public PointEvent(double d, double d1) {
         super(d, d1);
     }
 
