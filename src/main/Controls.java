@@ -1,5 +1,8 @@
 package main;
 
+import diagram.*;
+import diagram.Point;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +19,7 @@ public class Controls extends Panel
         running = true;
         canvas = mycanvas;
         String as[] = {
-                "Go", "Stop", "Clear"
+                "Go", "Stop", "Clear", "Next"
         };
         buttons = new Button[as.length];
         for (int i = 0; i < as.length; i++) {
@@ -36,7 +39,7 @@ public class Controls extends Panel
                     public void run() {
                         do {
                             try {
-                                Thread.sleep(25L);
+                                Thread.sleep(15L);
                             } catch (InterruptedException _ex) {
                                 break;
                             }
@@ -57,11 +60,17 @@ public class Controls extends Panel
             if (thread != null)
                 thread.interrupt();
             thread = null;
+            Point.GLOBLE_INDEX = 0;
             return;
         }
         if (s == "Stop") {
             threadRunning(false);
             thread.suspend();
+            return;
+        }
+        if(s == "Next")
+        {
+            canvas.step();
             return;
         }
     }

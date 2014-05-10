@@ -1,6 +1,6 @@
 package arc;
 
-import java.awt.*;
+import java.awt.Graphics;
 
 import diagram.Point;
 import diagram.ParabolaPoint;

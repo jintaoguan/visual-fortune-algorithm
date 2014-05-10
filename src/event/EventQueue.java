@@ -1,6 +1,6 @@
 package event;
 
-import java.awt.*;
+import java.awt.Graphics;
 
 //A priority queue to keep track of the site events and circle events
 public class EventQueue {

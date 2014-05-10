@@ -1,6 +1,6 @@
 package diagram;
 
-import java.awt.*;
+import java.awt.Graphics;
 
 public class Line
         implements Paintable {

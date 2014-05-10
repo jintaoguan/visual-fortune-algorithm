@@ -3,6 +3,7 @@ package main;
 import arc.*;
 import diagram.Point;
 import diagram.VoronoiDiagram;
+import event.CircleEvent;
 import event.EventQueue;
 import event.PointEvent;
 
@@ -13,6 +14,7 @@ import java.awt.event.MouseListener;
 public class DrawingPaper extends Canvas
         implements MouseListener {
 
+    //the sweep line
     public int XPos;
     public VoronoiDiagram voronoi;
     public EventQueue queue;
@@ -24,7 +26,7 @@ public class DrawingPaper extends Canvas
 
     public DrawingPaper(int i, int j) {
         setSize(i, j);
-        drawCircles = false;
+        drawCircles = true;
         drawBeach = true;
         drawVoronoiLines = true;
         addMouseListener(this);
@@ -62,11 +64,13 @@ public class DrawingPaper extends Canvas
 
     public synchronized void mousePressed(MouseEvent mouseevent) {
 
-        Point mypoint = new Point(mouseevent.getPoint());
+        Point mypoint = new Point(mouseevent.getPoint().getX(), mouseevent.getPoint().getY());
         if (mypoint.x > (double) XPos) {
+            PointEvent pe = new PointEvent(mypoint);
+            queue.insert(pe);
+            mypoint.index = pe.index;
             voronoi.addElement(mypoint);
             voronoi.checkDegenerate();
-            queue.insert(new PointEvent(mypoint));
             repaint();
         }
 
@@ -84,14 +88,14 @@ public class DrawingPaper extends Canvas
     }
 
     public synchronized void paint(Graphics g) {
-        g.setColor(Color.white);
+        g.setColor(Color.black);
         g.fillRect(0, 0, getBounds().width, getBounds().height);
         g.setColor(Color.red);
         voronoi.paint(g, drawVoronoiLines);
-        g.setColor(Color.green);
+        g.setColor(Color.blue);
         g.drawLine(XPos, 0, XPos, getBounds().height);
         if (queue != null && beachLineList != null) {
-            g.setColor(Color.black);
+            g.setColor(Color.white);
             queue.paint(g, drawCircles);
             beachLineList.paint(g, XPos, drawVoronoiLines, drawBeach);
         }
@@ -138,6 +142,33 @@ public class DrawingPaper extends Canvas
         }
         beachLineList.checkBounds(this, XPos);
         repaint();
+
+        //status
+        if(eventpoint != null){
+            //this event status
+            System.out.format("This is a %s, the index is %d\n",
+                    eventpoint.getClass().toString().substring(12), eventpoint.index);
+            if(eventpoint instanceof CircleEvent){
+                System.out.format("The disappearing beach line for this circle event is %d\n",
+                        ((CircleEvent) eventpoint).beachLine.beachIndex);
+            }
+            if(queue.nextRightHandSideEvent != null){
+                //next event status
+                System.out.format("Next is a %s, the index is %d\n",
+                        queue.nextRightHandSideEvent.getClass().toString().substring(12), queue.nextRightHandSideEvent.index);
+                if(queue.nextRightHandSideEvent instanceof CircleEvent){
+                    System.out.format("The disappearing beach line for next circle event is %d\n",
+                            ((CircleEvent) queue.nextRightHandSideEvent).beachLine.beachIndex);
+                }
+            }
+            else{
+                System.out.println("Next event is null\n");
+            }
+        }
+        else{
+            System.out.println("This event is null\n");
+        }
+        System.out.println();
     }
 
     public synchronized void clear() {

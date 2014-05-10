@@ -10,19 +10,23 @@ public class CircleEvent extends PointEvent {
 
     private double radius;
     //the beachLine (leaf) in the binary tree that will disappear when this circle event occurs
-    private BeachLine beachLine;
+    public BeachLine beachLine;
 
     public CircleEvent(double d, double d1, BeachLine arcnode) {
         super(d, d1);
         beachLine = arcnode;
         radius = distance(arcnode);
         x += radius;
+        index = GLOBLE_INDEX++;
     }
 
     public void paint(Graphics g) {
+        Color c = g.getColor();
+        g.setColor(Color.orange);
         super.paint(g);
         double d = radius;
         g.drawOval((int) (x - 2D * d), (int) (y - d), (int) (2D * d), (int) (2D * d));
+        g.setColor(c);
     }
 
     public void action(DrawingPaper mycanvas) {
