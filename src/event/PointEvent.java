@@ -9,10 +9,12 @@ public class PointEvent extends Point {
 
     public PointEvent(Point mypoint) {
         super(mypoint);
+        index = GLOBLE_INDEX++;
     }
 
     public PointEvent(double d, double d1) {
         super(d, d1);
+        index = GLOBLE_INDEX++;
     }
 
     //insert event point to the queue, no mater it's point or circle

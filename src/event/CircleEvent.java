@@ -1,6 +1,6 @@
 package event;
 
-import java.awt.Graphics;
+import java.awt.*;
 
 import diagram.Point;
 import arc.*;
@@ -17,12 +17,16 @@ public class CircleEvent extends PointEvent {
         beachLine = arcnode;
         radius = distance(arcnode);
         x += radius;
+        index = GLOBLE_INDEX++;
     }
 
     public void paint(Graphics g) {
+        Color c = g.getColor();
+        g.setColor(Color.orange);
         super.paint(g);
         double d = radius;
         g.drawOval((int) (x - 2D * d), (int) (y - d), (int) (2D * d), (int) (2D * d));
+        g.setColor(c);
     }
 
     public void action(DrawingPaper mycanvas) {

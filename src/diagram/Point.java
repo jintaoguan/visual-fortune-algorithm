@@ -13,7 +13,6 @@ public class Point
     public Point(double d, double d1) {
         x = d;
         y = d1;
-        index = GLOBLE_INDEX++;
     }
 
     public Point(Point mypoint) {
