@@ -18,9 +18,12 @@ public class BeachLine extends ParabolaPoint {
     public CircleEvent circleEvent;
     //the bottom side of starting point for this arc
     public Point startOfTrace;
+    public static int GLOBLE_BEACH_INDEX = 0;
+    public int beachIndex;
 
     public BeachLine(diagram.Point mypoint) {
         super(mypoint);
+        beachIndex = GLOBLE_BEACH_INDEX++;
     }
 
     /**
@@ -177,7 +180,7 @@ public class BeachLine extends ParabolaPoint {
                 if(d1 < maxBound){
                     double midy = (d1 + maxBound) / 2;
                     double midx = d - getYCoordinateOfParabolaByX(midy);
-                    g.drawString(Integer.toString(index), (int) midx - 2, (int) midy - 2);
+                    g.drawString(Integer.toString(beachIndex), (int) midx - 2, (int) midy - 2);
                 }
             }
 

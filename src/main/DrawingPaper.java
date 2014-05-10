@@ -150,7 +150,7 @@ public class DrawingPaper extends Canvas
                     eventpoint.getClass().toString().substring(12), eventpoint.index);
             if(eventpoint instanceof CircleEvent){
                 System.out.format("The disappearing beach line for this circle event is %d\n",
-                        ((CircleEvent) eventpoint).beachLine.index);
+                        ((CircleEvent) eventpoint).beachLine.beachIndex);
             }
             if(queue.nextRightHandSideEvent != null){
                 //next event status
@@ -158,7 +158,7 @@ public class DrawingPaper extends Canvas
                         queue.nextRightHandSideEvent.getClass().toString().substring(12), queue.nextRightHandSideEvent.index);
                 if(queue.nextRightHandSideEvent instanceof CircleEvent){
                     System.out.format("The disappearing beach line for next circle event is %d\n",
-                            ((CircleEvent) queue.nextRightHandSideEvent).beachLine.index);
+                            ((CircleEvent) queue.nextRightHandSideEvent).beachLine.beachIndex);
                 }
             }
             else{
