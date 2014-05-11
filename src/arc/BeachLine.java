@@ -95,11 +95,16 @@ public class BeachLine extends ParabolaPoint {
 
             //add this arc to the arc tree
 
-            // this is
+            // this is a new parabola, it is a horizontal line at this time
+            // we have to process the dividing logic here
             BeachLine arcnode = new BeachLine(parabolapoint);
-            // this is
+
+            // divide the original arc into two arc which have the same expression
+            // so we copy a new object same as the original arc
             arcnode.next = new BeachLine(this);
 
+            // process the dividing logic here
+            // the prev of newly generated arc is the original arc
             arcnode.prev = this;
             arcnode.next.next = next;
             arcnode.next.prev = arcnode;
@@ -117,7 +122,9 @@ public class BeachLine extends ParabolaPoint {
             checkCircle(eventqueue);
             next.next.checkCircle(eventqueue);
 
-            //update the beach line's start, the bottom point of each beach
+            // update the beach line's start, the bottom point of each beach
+            // process the startOfTrace of every arc involved in the dividing
+
             next.next.startOfTrace = startOfTrace;
             startOfTrace = new Point(sline - getYCoordinateOfParabolaByX(parabolapoint.y), parabolapoint.y);
             next.startOfTrace = new Point(sline - getYCoordinateOfParabolaByX(parabolapoint.y), parabolapoint.y);
@@ -144,6 +151,7 @@ public class BeachLine extends ParabolaPoint {
         if (d == x) {
             double d3 = arcnode != null ? d - arcnode.getYCoordinateOfParabolaByX(y) : 0.0D;
             if (drawBeach)
+                // draw a horizontal line from the border to this site event.
                 g.drawLine((int) d3, (int) y, (int) d, (int) y);
             d2 = y;
         } else {
@@ -152,6 +160,8 @@ public class BeachLine extends ParabolaPoint {
                     d2 = arcnode.y;
                 } else {
                     try {
+                        // calculate the x value of a quadratic formulate: ax^2 + bx + c = 0
+                        // ad[0] and ad[1] are x-coordinates of two intersection points
                         double ad[] = solveQuadratic(a - arcnode.a, b - arcnode.b, c - arcnode.c);
                         d2 = ad[0];
                     } catch (Throwable _ex) {
@@ -185,8 +195,11 @@ public class BeachLine extends ParabolaPoint {
             }
 
             if (flag && startOfTrace != null) {
+                // d2 here is the x-coordinate of the first intersection point of two parabola
                 double d7 = d - getYCoordinateOfParabolaByX(d2);
                 double d8 = d2;
+                // draw the line from the startOfTrace to the current intersection point (the first one)
+                // the startOfTrace is the first intersection point when the newer parabola is a line.
                 g.drawLine((int) startOfTrace.x, (int) startOfTrace.y, (int) d7, (int) d8);
             }
         }
