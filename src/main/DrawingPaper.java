@@ -88,12 +88,20 @@ public class DrawingPaper extends Canvas
     }
 
     public synchronized void paint(Graphics g) {
+
+        // paint the background
         g.setColor(Color.black);
         g.fillRect(0, 0, getBounds().width, getBounds().height);
+
+        // paint completed lines and points
         g.setColor(Color.red);
         voronoi.paint(g, drawVoronoiLines);
+
+        // paint the sweeping line
         g.setColor(Color.blue);
         g.drawLine(XPos, 0, XPos, getBounds().height);
+
+        // paint the parabola
         if (queue != null && beachLineList != null) {
             g.setColor(Color.white);
             queue.paint(g, drawCircles);

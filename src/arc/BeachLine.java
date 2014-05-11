@@ -144,6 +144,7 @@ public class BeachLine extends ParabolaPoint {
         if (d == x) {
             double d3 = arcnode != null ? d - arcnode.getYCoordinateOfParabolaByX(y) : 0.0D;
             if (drawBeach)
+                // draw a horizontal line from the border to this site event.
                 g.drawLine((int) d3, (int) y, (int) d, (int) y);
             d2 = y;
         } else {
