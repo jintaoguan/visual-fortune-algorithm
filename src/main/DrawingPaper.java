@@ -10,6 +10,7 @@ import event.PointEvent;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 public class DrawingPaper extends Canvas
         implements MouseListener {
@@ -74,15 +75,16 @@ public class DrawingPaper extends Canvas
             repaint();
         }
 
-	    /*
-	    Point mypoint1 = new Point(100,300);
-	    Point mypoint2 = new Point(200,500);
-	    voronoi.addElement(mypoint1);
-        voronoi.checkDegenerate();
-        queue.insert(new event.PointEvent(mypoint1));
-        voronoi.addElement(mypoint2);
-        voronoi.checkDegenerate();
-        queue.insert(new event.PointEvent(mypoint2));
+        /*
+        ArrayList<Point> arr = new ArrayList<Point>();
+        arr.add(new Point(100,200));
+        arr.add(new Point(100,200));
+        arr.add(new Point(100,200));
+        for( Point mypoint : arr ) {
+            voronoi.addElement(mypoint);
+            voronoi.checkDegenerate();
+            queue.insert(new event.PointEvent(mypoint));
+        }
         repaint();
         */
     }
